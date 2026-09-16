@@ -62,6 +62,7 @@
     stop(); cur = 0; scene.classList.remove('lit');
     paras.forEach(p => p.classList.remove('on', 'done')); fill.style.width = '100%';
     const fin = $('finished'); if (fin) fin.hidden = false;
+    try { document.dispatchEvent(new CustomEvent('mp:cardfinished', { detail: { card: C.n } })); } catch (e) {}
   }
   function jump(i) { stop(); cur = Math.max(0, Math.min(i, C.segs.length - 1)); play(); }
 

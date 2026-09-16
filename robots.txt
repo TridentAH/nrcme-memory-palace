@@ -1,2 +1,3 @@
 User-agent: *
 Allow: /
+Sitemap: https://nrcme-memory-palace.netlify.app/sitemap.xml

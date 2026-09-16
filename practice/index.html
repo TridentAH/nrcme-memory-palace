@@ -6,6 +6,19 @@
 <title>Practice questions — NRCME Memory Palace</title>
 <meta name="description" content="NRCME Memory Palace: Sketchy-style scene cards for the DOT medical examiner exam. Narrated, illustrated memory-palace cards, a cited cheat sheet, and practice questions for the FMCSA medical examiner certification test.">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://nrcme-memory-palace.netlify.app/practice/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NRCME Memory Palace">
+<meta property="og:title" content="Practice questions — NRCME Memory Palace">
+<meta property="og:description" content="NRCME Memory Palace: Sketchy-style scene cards for the DOT medical examiner exam. Narrated, illustrated memory-palace cards, a cited cheat sheet, and practice questions for the FMCSA medical examiner certification test.">
+<meta property="og:url" content="https://nrcme-memory-palace.netlify.app/practice/">
+<meta property="og:image" content="https://nrcme-memory-palace.netlify.app/assets/img/card00.jpg">
+<meta property="og:image:width" content="1672"><meta property="og:image:height" content="941">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Practice questions — NRCME Memory Palace">
+<meta name="twitter:description" content="NRCME Memory Palace: Sketchy-style scene cards for the DOT medical examiner exam. Narrated, illustrated memory-palace cards, a cited cheat sheet, and practice questions for the FMCSA medical examiner certification test.">
+<meta name="twitter:image" content="https://nrcme-memory-palace.netlify.app/assets/img/card00.jpg">
+<meta name="theme-color" content="#14263F">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/site.css">
@@ -33,7 +46,7 @@
     <div class="row small muted" id="count"></div>
   </div>
   <div id="quiz"></div>
-  <div class="quiz-foot"><span class="result" id="result">Pick an answer to begin.</span><span><button class="btn btn-sm" id="reset" type="button">Reset</button></span></div>
+  <div class="quiz-foot"><span class="result" id="result">Pick an answer to begin.</span><span class="small muted" id="lastQuiz"></span><span><button class="btn btn-sm" id="reset" type="button">Reset</button></span></div>
 </div></section>
 </main>
 <footer class="site-footer">
@@ -53,6 +66,7 @@
     </div>
   </div>
 </footer>
+<script src="../assets/site.js"></script>
 <script src="../assets/quiz.js"></script>
 <script>
 (function(){
@@ -66,7 +80,7 @@
     if (mode === 'quiz') qs = MPQuiz.shuffle(qs).slice(0, 20);
     count.textContent = mode === 'quiz' ? `${qs.length} random questions drawn from ${pool().length}` : `${qs.length} questions`;
     result.textContent = 'Pick an answer to begin.';
-    MPQuiz.renderQuiz(box, qs, { base: '..', showCard: true, cards: NAMES, onScore: s => { result.textContent = `${s.correct} of ${s.answered} correct` + (s.answered === s.total ? ` — finished: ${Math.round(s.correct / s.total * 100)}%` : ''); } });
+    MPQuiz.renderQuiz(box, qs, { base: '..', showCard: true, cards: NAMES, card: (mode === 'quiz' || sel.has('all') || sel.size !== 1) ? null : parseInt([...sel][0], 10), onScore: s => { result.textContent = `${s.correct} of ${s.answered} correct` + (s.answered === s.total ? ` — finished: ${Math.round(s.correct / s.total * 100)}%` : ''); } });
     window.scrollTo({ top: box.offsetTop - 90, behavior: 'smooth' });
   }
   document.querySelectorAll('.pill.mode').forEach(b => b.onclick = () => { mode = b.dataset.mode; document.querySelectorAll('.pill.mode').forEach(x => x.setAttribute('aria-pressed', x === b)); newquiz.hidden = mode !== 'quiz'; run(); });

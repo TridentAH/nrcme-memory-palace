@@ -44,6 +44,7 @@
       el.querySelector('.expl').classList.add('show');
       state.answered++; if (ok) state.correct++;
       if (opts.onScore) opts.onScore(state);
+      if (state.answered === state.total) { try { document.dispatchEvent(new CustomEvent('mp:quizfinished', { detail: { card: opts.card === undefined ? null : opts.card, correct: state.correct, total: state.total } })); } catch (e) {} }
     }
     return state;
   }
